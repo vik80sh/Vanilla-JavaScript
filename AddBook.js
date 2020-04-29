@@ -61,7 +61,7 @@ class UI {
 
         haveToAppend.insertBefore(createdDiv,appendBefore);
 
-        setTimeout(()=>document.querySelector('.alert').remove() , 1000)
+        setTimeout(()=>document.querySelector('.alert').remove() , 3000)
 
     }
 }
@@ -83,6 +83,7 @@ document.querySelector('#book-form').addEventListener('submit',(e)=>{
         // Instantiate Book;
         const book = new Book(title,author,isbn);
         UI.addBookToList(book);
+        UI.alertMessage("Book Added","success") 
         //clear Feild
         UI.clearField()
     }else{
@@ -94,4 +95,5 @@ document.querySelector('#book-form').addEventListener('submit',(e)=>{
 
 document.querySelector('#book-list').addEventListener('click',(e)=>{
     UI.deleteBook(e.target)
+    UI.alertMessage("Book Removed","success") 
 })
