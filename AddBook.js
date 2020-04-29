@@ -6,11 +6,11 @@ class Book {
         this.author = author;
         this.isbn = isbn
     }
-   
+
 }
 // UI Class: handle UI tasks
 class UI {
-    static displayBooks(){
+    static displayBooks() {
         const StoredBooks = [
             {
                 title: "Book One",
@@ -32,7 +32,7 @@ class UI {
         const list = document.querySelector('#book-list');
 
         const row = document.createElement('tr');
-        
+
         row.innerHTML = `
             <td>${book.title}</td>
             <td>${book.author}</td>
@@ -41,17 +41,19 @@ class UI {
         list.appendChild(row);
     }
 
-    static deleteBook(el){
-        if(el.classList.contains('delete'))
+    static deleteBook(el) {
+        if (el.classList.contains('delete')) {
             el.parentElement.parentElement.remove();
-        
+            UI.alertMessage("Book Removed", "success")
+        }
+
     }
-    static clearField(){
+    static clearField() {
         document.querySelector('#title').value = ""
-        document.querySelector('#author').value= ""
-        document.querySelector('#isbn').value =""
+        document.querySelector('#author').value = ""
+        document.querySelector('#isbn').value = ""
     }
-    static alertMessage(message,className){
+    static alertMessage(message, className) {
         const createdDiv = document.createElement('div');
         createdDiv.className = `alert alert-${className}`;
         const textMessage = document.createTextNode(message);
@@ -59,9 +61,9 @@ class UI {
         const haveToAppend = document.querySelector('.container')
         const appendBefore = document.querySelector('#book-form')
 
-        haveToAppend.insertBefore(createdDiv,appendBefore);
+        haveToAppend.insertBefore(createdDiv, appendBefore);
 
-        setTimeout(()=>document.querySelector('.alert').remove() , 3000)
+        setTimeout(() => document.querySelector('.alert').remove(), 3000)
 
     }
 }
@@ -72,28 +74,27 @@ class UI {
 document.addEventListener('DOMContentLoaded', UI.displayBooks)
 
 // Event : Add a book
-document.querySelector('#book-form').addEventListener('submit',(e)=>{
+document.querySelector('#book-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const title = document.querySelector('#title').value
     const author = document.querySelector('#author').value
     const isbn = document.querySelector('#isbn').value
 
     //Validation
-    if(title && author && isbn){
+    if (title && author && isbn) {
         // Instantiate Book;
-        const book = new Book(title,author,isbn);
+        const book = new Book(title, author, isbn);
         UI.addBookToList(book);
-        UI.alertMessage("Book Added","success") 
+        UI.alertMessage("Book Added", "success")
         //clear Feild
         UI.clearField()
-    }else{
-       UI.alertMessage("please Enter all fileds","danger") 
+    } else {
+        UI.alertMessage("please Enter all fileds", "danger")
     }
 
 })
 // Event : Remove a Book
 
-document.querySelector('#book-list').addEventListener('click',(e)=>{
+document.querySelector('#book-list').addEventListener('click', (e) => {
     UI.deleteBook(e.target)
-    UI.alertMessage("Book Removed","success") 
 })
